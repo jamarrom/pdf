@@ -1,3 +1,5 @@
+import React,{Component} from "react";
+
 import {
   Document,
   Page,
@@ -19,19 +21,46 @@ const styles = StyleSheet.create({
   baseText: {
     fontWeight: 'bold',
   },
+  displayNone: {
+    display: 'none',
+  },
   viewer: {
     width: window.innerWidth, //the pdf viewer will take up all of the width and height
     height: window.innerHeight,
   },
 });
 
-// Create Document Component
+export class BotonCompartir extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      mostrar: false
+    };
+    this.btnMostrar=this.btnMostrar.bind(this);
+  }
+
+  btnMostrar(e) {
+    this.setState ({
+      mostrar: true
+    });
+  }
+
+  render() {
+    return(
+    <div>
+      {this.state.mostrar?<Pdf />:null }
+      <nav>
+        <button style={this.state.mostrar?styles.displayNone:styles.section} onClick={this.btnMostrar}>Compartir</button>
+      </nav>
+    </div>
+    )
+  }
+}
+
 function Pdf() {
   return (
     <PDFViewer style={styles.viewer}>
-      {/* Start of the document*/}
       <Document>
-        {/*render a single page*/}
         <Page size="A4" style={styles.page}>
           <View style={styles.section}>
             <Text style={styles.baseText}>CLABE</Text>
@@ -66,4 +95,3 @@ function Pdf() {
     </PDFViewer>
   );
 }
-export default Pdf;
